@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 export default function useDarkMode() {
   const isDarkmode: boolean = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const [theme, setTheme] = useState<string>(localStorage.theme || isDarkmode ? 'dark' : 'light')
+  const [theme, setTheme] = useState<string>(localStorage.theme || !isDarkmode ? 'light' : 'dark')
 
   useEffect(() => {
     const root = window.document.documentElement

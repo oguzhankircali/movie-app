@@ -16,7 +16,7 @@ type Props = { children?: React.ReactNode | null } | null
 
 const ModalSearch = forwardRef<Ref, Props>((props, ref) => {
   // Variables
-  const apiKey: string = import.meta.env.VITE_API_KEY
+  const apiKey: string = import.meta.env.VITE_BASE_API_URL
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [recentSearch, setRecentSearch] = useState<IMovie[]>([])

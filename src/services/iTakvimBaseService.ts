@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const baseUrl: string = import.meta.env.VITE_TMDB_API_BASE_URL
+const baseUrl: string = import.meta.env.VITE_ITAKVIM_API_BASE_URL
 
-const api = () =>
+const iTakvimApi = () =>
   axios.create({
     baseURL: baseUrl,
     headers: {
@@ -10,4 +10,4 @@ const api = () =>
     },
   })
 
-export default api
+export default iTakvimApi

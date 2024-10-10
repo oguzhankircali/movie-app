@@ -2,17 +2,16 @@
 import { IMovieDetail } from 'interfaces/IMovieDetail'
 // Images
 import { Dummy } from '@/assets/images'
+import { ICalendar } from '@/interfaces/ICalendar'
+import CalendarEvents from './CalendarEvents'
 
 // Local interface
 interface IProps {
-  movie: IMovieDetail
+  movie: IMovieDetail,
+  calendar?: ICalendar
 }
 
-const DetailDescription = ({ movie }: IProps) => {
-  // Variables
-  const releaseDate: string | undefined = movie
-    ? movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0]
-    : ''
+const DetailDescription = ({ movie, calendar }: IProps) => {
 
   // Error image
   const onErrorImage = (e: any) => (e.target.src = Dummy)
@@ -23,9 +22,9 @@ const DetailDescription = ({ movie }: IProps) => {
       {movie.backdrop_path && (
         <div className='relative'>
           <img
-            src={`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path}`}
-            alt={movie.name}
-            className='w-full md:h-auto h-[296px] object-cover bg-center'
+            src={`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/yDHYTfA3R0jFYba16jBB1ef8oIt.jpg`}
+            alt={calendar?.coverUrl}
+            className='w-full h-[296px] object-cover bg-center'
           />
           <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t dark:from-background from-background-light dark:via-background/90 via-background-light/20 dark:via-20% via-50% dark:to-background/10 to-background-light/5 to-70%' />
         </div>
@@ -44,7 +43,7 @@ const DetailDescription = ({ movie }: IProps) => {
               onError={onErrorImage}
             />
             <img
-              src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+              src={`${calendar?.coverUrl}`}
               alt={movie.title || movie.name}
               className='absolute top-2 rounded-lg blur-lg -z-10 opacity-30 xl:w-[220px] lg:w-[190px] md:w-[170px] w-[160px] xl:min-w-[220px] lg:min-w-[190px] md:min-w-[170px] min-w-[160px] xl:h-[330px] lg:h-[290px] md:h-[270px] h-[240px] xl:min-h-[330px] lg:min-h-[290px] md:min-h-[270px] min-h-[240px]'
               onError={onErrorImage}
@@ -55,13 +54,13 @@ const DetailDescription = ({ movie }: IProps) => {
           <div className='flex flex-col mt-16 space-y-3'>
             {/* Title */}
             <h1 className='tracking-wide font-bold xl:text-3xl md:text-2xl text-slate-950 dark:text-slate-100'>
-              {movie.original_name || movie.original_title}
+              {calendar?.name}
             </h1>
 
             {/* Release year & language */}
             {movie.spoken_languages.length > 0 && (
               <p className='font-medium text-sm text-slate-950 dark:text-slate-100'>
-                {releaseDate} &#9679; {movie.spoken_languages[0].english_name}{' '}
+                {calendar?.tenantCode} &#9679; {calendar?.eventCount}{' Etkinlik'}
                 {movie.first_air_date && <>&#9679; {movie.number_of_episodes} Episode</>}
               </p>
             )}
@@ -82,6 +81,12 @@ const DetailDescription = ({ movie }: IProps) => {
             <p className='xl:max-w-[60%] lg:max-w-[70%] font-normal text-sm text-slate-950 dark:text-slate-100 leading-loose'>
               {movie.overview}
             </p>
+
+            <a className='w-min font-medium text-blue-500 whitespace-nowrap cursor-pointer' 
+              href={`${'webcal://localhost:7284/v1/icalendars/' + calendar?.permalink}`}>Takvime Ekle</a>
+
+
+            <CalendarEvents calendarEvents={calendar?.calendarEvents} />
           </div>
         </div>
       </div>
