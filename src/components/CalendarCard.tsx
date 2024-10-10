@@ -21,7 +21,7 @@ const CalendarCard = ({ calendar }: IProps) => {
   return (
     <>
       <Link
-        to={`/movie/detail/533535`}
+        to={`/movie/detail/${calendar.permalink}`}
         className='w-full h-auto md:h-[250px] lg:h-[300px] mb-3 rounded-2xl'
       >
         {/* Image */}

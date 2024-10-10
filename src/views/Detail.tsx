@@ -33,7 +33,7 @@ import CalendarEvents from './partials/CalendarEvents'
 const Detail = () => {
   // Variables
   const apiKey: string = import.meta.env.VITE_API_KEY
-  const { type, id } = useParams()
+  const { type, id, permalink } = useParams()
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [detail, setDetail] = useState<IMovieDetail | null>(null)
@@ -50,16 +50,18 @@ const Detail = () => {
       language: 'en-US',
     }
 
-    const resCalendarData = await getCalendar('tff-galatasaray', { api_key: apiKey })
+    console.log(permalink)
+
+    const resCalendarData = await getCalendar(permalink, { api_key: apiKey })
     if (resCalendarData.data) setCalendar(resCalendarData.data)
 
-    const resData = await getDetail(type || '', id || '', payload)
+    const resData = await getDetail(type || '', '533535' || '', payload)
     if (resData.data) setDetail(resData.data)
 
-    const resCredits = await getCredits(type || '', id || '', payload)
+    const resCredits = await getCredits(type || '', '533535' || '', payload)
     if (resCredits.data) setCredits(resCredits.data.cast)
 
-    const resTrailers = await getTrailers(type || '', id || '', payload)
+    const resTrailers = await getTrailers(type || '', '533535' || '', payload)
     if (resTrailers.data && resTrailers.data.results.length > 0)
       setTrailers(
         resTrailers.data.results
@@ -72,7 +74,7 @@ const Detail = () => {
           .slice(0, 5)
       )
 
-    const resReviews = await getReviews(type || '', id || '', payload)
+    const resReviews = await getReviews(type || '', '533535' || '', payload)
     if (resReviews.data) {
       setReviews(
         resReviews.data.results.map((review: IMovieReviews) => {
@@ -82,7 +84,7 @@ const Detail = () => {
       )
     }
 
-    const resRecommendations = await getRecommendation(type || '', id || '', payload)
+    const resRecommendations = await getRecommendation(type || '', '533535' || '', payload)
     if (resRecommendations.data && resRecommendations.data.results.length > 0)
       setRecommendations(resRecommendations.data.results)
 

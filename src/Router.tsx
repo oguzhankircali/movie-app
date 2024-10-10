@@ -29,7 +29,7 @@ export default function Router() {
         {/* Detail */}
         <Route element={<DetailLayout />}>
           <Route
-            path='/:type/detail/:id'
+            path='/:type/detail/:permalink'
             element={<Detail />}
           />
         </Route>
